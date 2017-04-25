@@ -10,7 +10,8 @@ const {
     Image,
     ActivityIndicator,
     NetInfo,
-    Platform
+    Platform,
+    View
 } = ReactNative;
 
 
@@ -159,6 +160,7 @@ const CachedImage = React.createClass({
     },
 
     renderLoader() {
+        const {customIndicator} = this.props;
         const imageProps = getImageProps(this.props);
         const imageStyle = [this.props.style, styles.loaderPlaceholder];
 
@@ -170,6 +172,9 @@ const CachedImage = React.createClass({
         // if the imageStyle has borderRadius it will break the loading image view on android
         // so we only show the ActivityIndicator
         if (Platform.OS === 'android' && flattenStyle(imageStyle).borderRadius) {
+            if(customIndicator){
+                return customIndicator;
+            }
             return (
                 <ActivityIndicator
                     {...activityIndicatorProps}
@@ -181,7 +186,7 @@ const CachedImage = React.createClass({
             ...imageProps,
             style: imageStyle,
             source,
-            children: (
+            children: customIndicator ? customIndicator : (
                 <ActivityIndicator
                     {...activityIndicatorProps}
                     style={activityIndicatorStyle}/>

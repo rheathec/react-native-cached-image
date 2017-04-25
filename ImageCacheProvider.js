@@ -328,6 +328,7 @@ function getCacheInfo() {
 }
 
 module.exports = {
+    deleteFile,
     isCacheable,
     getCachedImagePath,
     cacheImage,
